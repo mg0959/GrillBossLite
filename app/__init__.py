@@ -1,10 +1,8 @@
 __author__ = 'GrMartin'
 
 from flask import Flask, session
-#from flask.ext.socketio import SocketIO
 from flask_socketio import SocketIO
 from flask_login import LoginManager
-#from flask.ext.mail import Mail
 
 
 app = Flask(__name__)

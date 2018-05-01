@@ -3,7 +3,7 @@ import os
 
 # Storage Locations For Data
 basedir = os.path.abspath(os.path.dirname(__file__))
-DATASTORAGEDIR = os.path.join(basedir, 'app\\data')
+DATASTORAGEDIR = os.path.join(basedir, 'app', 'data')
 
 # Security Stuff
 CSRF_ENABLED = True
@@ -14,8 +14,8 @@ MAIL_SERVER = 'smtp.googlemail.com'
 MAIL_PORT = 465
 MAIL_USE_TLS = False
 MAIL_USE_SSL = True
-MAIL_USERNAME = "no.reply.missionconnect@gmail.com" #os.environ.get('MAIL_USERNAME')
-MAIL_PASSWORD = "mc2014mc" #os.environ.get('MAIL_PASSWORD')
+MAIL_USERNAME = "" #os.environ.get('MAIL_USERNAME')
+MAIL_PASSWORD = "" #os.environ.get('MAIL_PASSWORD')
 
 # administrator list
 ADMINS = ['mg0959@gmail.com']
@@ -33,4 +33,4 @@ SOCKET_SAMPLING_INTERVAL = 2 #when socket connected
 RECORD_SAMPLING_INTERVAL = 10
 
 #Set to true if testing without arduino
-TESTING_NO_ARDUINO = True
+TESTING_NO_ARDUINO = False

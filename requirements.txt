@@ -1,8 +1,8 @@
 Flask==0.12.2
 Flask-Email==1.4.4
 Flask-Login==0.4.1
-Flask-SocketI==2.9.4
-Jinja==2.10
+Flask-SocketIO==2.9.4
+Jinja2==2.10
 MarkupSafe==1.0
 Werkzeug==0.14.1
 blinker==1.4
