@@ -199,7 +199,7 @@ class ArduinoTools:
 
         return statusDict
 
-    def getDataFromSessionStart(self):
+    def superceded_getDataFromSessionStart(self):
         print("\n\n****************Getting Session Data")
         if not self.sessionStartTime:
             print("No Session Running")
@@ -232,6 +232,38 @@ class ArduinoTools:
                             i += 1
         return datapoints
 
+    def getDataFromSessionStart(self):
+        print("\n\n****************Getting Session Data")
+        if not self.sessionStartTime:
+            print("No Session Running")
+            return []
+
+
+        datasets = {}
+        for i in range(1,9):
+            datasets["T"+str(i)] = []
+        max_days = 5
+        for day_count in range(max_days):
+            file_date = self.sessionStartTime + datetime.timedelta(day_count,0)
+            if file_date > datetime.datetime.now(): break# file date is in the future
+            else:
+                datafileDir = os.path.join(self.dataStorageDir, str(file_date.year), str(file_date.month))
+                dataFilename = os.path.join(datafileDir, "%02d.csv") % (file_date.day)
+                if not os.path.exists(dataFilename):
+                    print(dataFilename, "does not exist.... skipping")
+                else:
+                    with open(dataFilename, "r") as csvFile:
+                        i=1
+                        for row in csv.reader(csvFile):
+                            if i > 1: # not the header row
+                                datapoint_datetime = datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S")
+                                if self.sessionStartTime < datapoint_datetime: # time is in session time
+                                    time_pt = datapoint_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                                    for j in range(1, 9):
+                                        datasets["T" + str(j)].append({"t":time_pt, "y": row[j+1]})
+                                else: pass # skip this line since its out of session time
+                            i += 1
+        return datasets
 
 
 
@@ -275,7 +307,7 @@ class Thermometer:
 
     def updateStatus(self, ardReturnVal):
         # read thermometers... need to add the voltage conversion algorithm here
-        ardReturnVal = int(ardReturnVal)/2023
+        ardReturnVal = int(ardReturnVal)/1023
         self.temp = round((866.88*ardReturnVal**3 - 1263.2*ardReturnVal**2+653.62*ardReturnVal - 0.58)*1.8 + 32)
 
 class onOffElement:

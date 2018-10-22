@@ -50,10 +50,7 @@
             socket.on('smokeSessionData', function(dataset){
                 console.log("Got smokeSessionData");
                 console.log(dataset);
-                $.each(dataset, function(index, value) {
-                    addTempData(value);
-                });
-
+                replaceChartData(dataset);
             });
 
             // cmd Response
@@ -63,8 +60,8 @@
 
             // handlers for the different forms in the page
             // these send data to the server in a variety of ways
-            $('#updateBtn').click(function() {
-                socket.emit('get arduinoStatus');
+            $('#loadDataBtn').click(function() {
+                socket.emit('get_smokeSessionData');
                 return false;
             });
 
@@ -107,7 +104,7 @@
 <body>
 <h1>Control Settings</h1>
 
-<button id="updateBtn">Update Data</button>
+<button id="loadDataBtn">Load Session Data</button>
 <button id="disconnectBtn">Disconnect</button>
 <br>
 <br>
@@ -281,6 +278,13 @@ Time: <span id="time">00/00/0000 00:00:00</span>
                 newData = Math.max(data["T"+(index+1)], 100);
                 dataset.data.push({t:newTime, y:newData})
             });
+            tempChartObj.update();
+        };
+
+        function replaceChartData(new_datasets){
+            tempChartObj.data.datasets.forEach((dataset, index) => {
+                dataset.data = new_datasets["T"+(index+1)]
+                });
             tempChartObj.update();
         };
 

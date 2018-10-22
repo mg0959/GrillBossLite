@@ -33,4 +33,4 @@ SOCKET_SAMPLING_INTERVAL = 2 #when socket connected
 RECORD_SAMPLING_INTERVAL = 10
 
 #Set to true if testing without arduino
-TESTING_NO_ARDUINO = False
+TESTING_NO_ARDUINO = True

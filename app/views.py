@@ -11,10 +11,19 @@ import datetime, uuid
 def index():
     return render_template("index.html")
 
+@app.route('/sandbox')
+def sandbox():
+    return render_template("sandbox.html")
+
 @socketio.on('get arduinoStatus', namespace='/data')
 def arduinoStatus():
     Arduino.updateReadings()
     emit('statusData', Arduino.makeStatusDict(), broadcast=True)
+
+@socketio.on('get_smokeSessionData', namespace='/data')
+def getSmokeSessionData():
+    emit('smokeSessionData', Arduino.getDataFromSessionStart())
+
 
 @socketio.on('send_arduino_cmd', namespace="/data")
 def sendArduinoCmd(cmd_data):
@@ -50,7 +59,6 @@ def socket_connect():
     Arduino.start_socket_interval_readings(SOCKET_SAMPLING_INTERVAL)
     emit('connected response', {'socketId': socketId})
     emit('new leader', {'leader':app.clients[0]}, broadcast=True)
-    emit('smokeSessionData', Arduino.getDataFromSessionStart())
 
 
 @socketio.on('disconnect', namespace='/data')
