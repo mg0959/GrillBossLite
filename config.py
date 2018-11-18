@@ -5,7 +5,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 DATASTORAGEDIR = os.path.join(basedir, 'app', 'data')
 
-# Security Stuff
+# CSRF
 CSRF_ENABLED = True
 SECRET_KEY = 'sm0keyMe4tIzGood'
 
@@ -30,7 +30,8 @@ ARDUINO_BAUDRATE = 9600
 
 # Time interval to pull readings from arduino in seconds
 SOCKET_SAMPLING_INTERVAL = 2 #when socket connected
-RECORD_SAMPLING_INTERVAL = 10
+RECORD_SAMPLING_INTERVAL = 20
 
 #Set to true if testing without arduino
 TESTING_NO_ARDUINO = True
+CALIBRATE_THERM = True
