@@ -1,4 +1,4 @@
-Flask==0.12.2
+Flask==0.12.3
 Flask-Email==1.4.4
 Flask-Login==0.4.1
 Flask-SocketIO==2.9.4
