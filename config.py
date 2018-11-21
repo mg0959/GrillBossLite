@@ -21,7 +21,7 @@ MAIL_PASSWORD = "" #os.environ.get('MAIL_PASSWORD')
 ADMINS = ['mg0959@gmail.com']
 
 # Arduino Settings
-ARDUINO_PORT = "COM3"
+ARDUINO_PORT = "COM3" #/dev/ttyACM
 ARDUINO_BAUDRATE = 9600
 
 # Celery Settings

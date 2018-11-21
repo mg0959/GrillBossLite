@@ -307,9 +307,10 @@ class Thermometer:
 
     def updateStatus(self, ardReturnVal):
         # read thermometers... need to add the voltage conversion algorithm here
-        ardReturnVal = int(ardReturnVal)/1023
         if CALIBRATE_THERM: self.temp = ardReturnVal
-        else: self.temp = round((866.88*ardReturnVal**3 - 1263.2*ardReturnVal**2+653.62*ardReturnVal - 0.58)*1.8 + 32)
+        else:
+            ardReturnVal = int(ardReturnVal) / 1023
+            self.temp = round((866.88*ardReturnVal**3 - 1263.2*ardReturnVal**2+653.62*ardReturnVal - 0.58)*1.8 + 32)
 
 class onOffElement:
     def __init__(self, ard_id, ard_parent):
