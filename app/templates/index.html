@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="{{ url_for('.static', filename='moment.js')}}"></script>
     <script src="{{ url_for('.static', filename='Chart/Chart.js')}}"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 
     <script type="text/javascript" charset="utf-8">
@@ -23,6 +23,14 @@
                 $.each(data, function(index, value) {
                     $("#"+index).html(value);
                 });
+                if (data["sessionStartTime"] == "off"){
+                    $('#adjustedTime').prop("disabled", true);
+                    $('#adjustSession').prop("disabled", true);
+                    }
+                else {
+                    $('#adjustedTime').prop("disabled", false);
+                    $('#adjustSession').prop("disabled", false);
+                    }
                 addTempData(data);
 
             });
@@ -80,6 +88,10 @@
                 return false;
             });
 
+            $('#adjustSession').click(function(){
+                // Add functionality to adjust start time
+            });
+
             $('#fan_off').click(function(){
                 socket.emit('send_arduino_cmd', {"fan_speed":"off"});
             });
@@ -115,6 +127,11 @@
 <br>
 
 Session Start Time: <span id="sessionStartTime">--</span>
+<br>
+
+<button id="adjustSession" disabled>Adjust Start Time</button>
+<input type="text" id="adjustedTime" size="6" placeholder="HH:MM" pattern="[0-2][0-9]:[0-5][0-9]" disabled/>
+(In development)
 
 <table>
     <thead><tr><th colspan="4">Fan Speed</th></tr></thead>

@@ -21,17 +21,21 @@ MAIL_PASSWORD = "" #os.environ.get('MAIL_PASSWORD')
 ADMINS = ['mg0959@gmail.com']
 
 # Arduino Settings
-ARDUINO_PORT = "COM3" #/dev/ttyACM
+from sys import platform
+if "linux" in platform: ARDUINO_PORT = "/dev/ttyACM"
+elif platform == "win32": ARDUINO_PORT = "COM3"
 ARDUINO_BAUDRATE = 9600
-
-# Celery Settings
-#CELERY_BROKER_URL = 'redis://localhost:6379/0'
-#CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 # Time interval to pull readings from arduino in seconds
 SOCKET_SAMPLING_INTERVAL = 2 #when socket connected
-RECORD_SAMPLING_INTERVAL = 20
+RECORD_SAMPLING_INTERVAL = 5
 
 #Set to true if testing without arduino
-TESTING_NO_ARDUINO = True
-CALIBRATE_THERM = True
+TESTING_NO_ARDUINO = False
+CALIBRATE_THERM = False
+
+#THERM Calibration Values
+THERM_CONST_A = 572.17
+THERM_CONST_B = -673.68
+THERM_CONST_C = 386.37
+THERM_CONST_D = 11.494
