@@ -89,7 +89,8 @@
             });
 
             $('#adjustSession').click(function(){
-                // Add functionality to adjust start time
+                socket.emit('adjustSessionStart', {"start_time":$('#adjustedTime').val()});
+                console.log('sent adjust number')
             });
 
             $('#fan_off').click(function(){
@@ -292,7 +293,7 @@ Time: <span id="time">00/00/0000 00:00:00</span>
             var newTime = data["time"];
             var newData;
             tempChartObj.data.datasets.forEach((dataset, index) => {
-                newData = Math.max(data["T"+(index+1)], 100);
+                newData = Math.max(data["T"+(index+1)], 50);
                 dataset.data.push({t:newTime, y:newData})
             });
             tempChartObj.update();

@@ -22,7 +22,7 @@ ADMINS = ['mg0959@gmail.com']
 
 # Arduino Settings
 from sys import platform
-if "linux" in platform: ARDUINO_PORT = "/dev/ttyACM"
+if "linux" in platform: ARDUINO_PORT = "/dev/ttyACM0"
 elif platform == "win32": ARDUINO_PORT = "COM3"
 ARDUINO_BAUDRATE = 9600
 
@@ -31,7 +31,7 @@ SOCKET_SAMPLING_INTERVAL = 2 #when socket connected
 RECORD_SAMPLING_INTERVAL = 5
 
 #Set to true if testing without arduino
-TESTING_NO_ARDUINO = False
+TESTING_NO_ARDUINO = True
 CALIBRATE_THERM = False
 
 #THERM Calibration Values

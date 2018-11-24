@@ -70,6 +70,16 @@ class ArduinoTools:
         self.stop_interval_record_readings()
         self.sessionStartTime = None
 
+    def adjustSessionStart(self, newHour, newMinute):
+        newTime = datetime.datetime(self.sessionStartTime.year,
+                                                  self.sessionStartTime.month,
+                                                  self.sessionStartTime.day,
+                                                  newHour,
+                                                  newMinute,
+                                                  0)
+        if newTime > datetime.datetime.now(): return "Error - New time is in the future"
+        else: self.sessionStartTime = newTime; return "Session Time Changed"
+
     def initiateSerialConnection(self, port, baudrate):
         self.ser = serial.Serial(port, baudrate)
         i = 0
@@ -308,7 +318,8 @@ class Thermometer:
     def updateStatus(self, ardReturnVal):
         # read thermometers
         if CALIBRATE_THERM: self.temp = ardReturnVal
-        else:
+        elif int(ardReturnVal) <= 0: self.temp = 0 #nothing is plugged into the thermometer port
+        else: # Thermometer plugged in and ardReturnVal needs to be converted to deg F
             ardReturnVal = int(ardReturnVal) / 1023
             self.temp = round((THERM_CONST_A*ardReturnVal**3 +THERM_CONST_B*ardReturnVal**2+THERM_CONST_C*ardReturnVal + THERM_CONST_D)*1.8 + 32)
 

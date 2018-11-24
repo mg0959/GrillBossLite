@@ -50,6 +50,13 @@ def startSession():
     Arduino.stopSession()
     emit('cmd_response', {'response': 'Session Ended'})
 
+@socketio.on('adjustSessionStart', namespace='/data')
+def adjustSessionStart(startTimeData):
+    newHour, newMin = startTimeData["start_time"].split(":")
+    response = Arduino.adjustSessionStart(int(newHour), int(newMin))
+    # Need to add error feedback; check that time is not in the future
+    emit('cmd_response', {'response': response})
+
 @socketio.on('connect', namespace='/data')
 def socket_connect():
     socketId = str(uuid.uuid4())
