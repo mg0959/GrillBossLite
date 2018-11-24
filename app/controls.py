@@ -5,6 +5,7 @@ import threading, time, datetime
 import serial, csv
 from config import *
 from app import socketio
+import codecs
 
 ##############################
 # Arduino Commands
@@ -262,7 +263,7 @@ class ArduinoTools:
                 if not os.path.exists(dataFilename):
                     print(dataFilename, "does not exist.... skipping")
                 else:
-                    with open(dataFilename, "r") as csvFile:
+                    with codecs.open(dataFilename, 'rU', 'utf-8') as csvFile:
                         i=1
                         for row in csv.reader(csvFile):
                             if i > 1: # not the header row
@@ -318,7 +319,7 @@ class Thermometer:
     def updateStatus(self, ardReturnVal):
         # read thermometers
         if CALIBRATE_THERM: self.temp = ardReturnVal
-        elif int(ardReturnVal) <= 0: self.temp = 0 #nothing is plugged into the thermometer port
+        elif int(ardReturnVal) <= 5: self.temp = 0 #nothing is plugged into the thermometer port
         else: # Thermometer plugged in and ardReturnVal needs to be converted to deg F
             ardReturnVal = int(ardReturnVal) / 1023
             self.temp = round((THERM_CONST_A*ardReturnVal**3 +THERM_CONST_B*ardReturnVal**2+THERM_CONST_C*ardReturnVal + THERM_CONST_D)*1.8 + 32)
